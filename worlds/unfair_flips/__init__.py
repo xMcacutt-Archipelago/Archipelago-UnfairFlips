@@ -18,7 +18,7 @@ class UnfairFlipsWeb(WebWorld):
         "English",
         "setup_en.md",
         "setup/en",
-        ["xMcacutt", "Dashieswag92"]
+        ["xMcacutt", "Dashieswag92", "itepastra"]
     )
 
     tutorials = [setup_en]
@@ -59,7 +59,8 @@ class UnfairFlipsWorld(World):
             "DeathLinkMinStreak": self.options.death_link_min_streak.value,
             "HeadsUpgradeCount": gate_count,
             "FlipSpeedUpgradeCount": upgrades_count,
-            "ComboUpgradeCount": upgrades_count
+            "ComboUpgradeCount": upgrades_count,
+            "AutoFlipUpgradeCount": upgrades_count,
         }
 
 
@@ -83,7 +84,8 @@ class UnfairFlipsWorld(World):
         region.locations.append(loc)
 
     def generate_output(self, output_dir):
-        visualize_regions(self.multiworld.get_region("Menu", self.player), f"Player{self.player}.puml",
-                          show_entrance_names=True,
-                          regions_to_highlight=self.multiworld.get_all_state(self.player).reachable_regions[
-                              self.player])
+        # visualize_regions(self.multiworld.get_region("Menu", self.player), f"Player{self.player}.puml",
+        #                   show_entrance_names=True,
+        #                   regions_to_highlight=self.multiworld.get_all_state(self.player).reachable_regions[
+        #                       self.player])
+        return

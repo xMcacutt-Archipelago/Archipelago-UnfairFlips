@@ -38,6 +38,7 @@ def create_items(world: UnfairFlipsWorld):
     create_multiple("Flip+", round(gate_count * (1 - JUNK_FACTOR)), world)
     create_multiple("Combo+", round(gate_count * (1 - JUNK_FACTOR)), world)
     create_multiple("Coin+", 4, world)
+    create_multiple("AutoFlip+", round(gate_count * (1 - JUNK_FACTOR)), world)
 
     # Junk
     remaining_locations: int = total_location_count - len(world.itempool)
@@ -64,6 +65,7 @@ unfair_flips_item_table: Dict[str, ItemData] = {
     "Flip+": ItemData(0x3, ItemClassification.useful),
     "Combo+": ItemData(0x4, ItemClassification.progression),
     "Coin+": ItemData(0x5, ItemClassification.progression),
+    "AutoFlip+": ItemData(0x6, ItemClassification.useful),
     "Tails Trap": ItemData(0x10, ItemClassification.trap),
     "Penny Trap": ItemData(0x11, ItemClassification.trap),
     "Tax Trap": ItemData(0x12, ItemClassification.trap),
