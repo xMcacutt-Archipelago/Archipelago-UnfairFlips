@@ -24,7 +24,7 @@ def is_shop_accessible(world, heads_upgrade_count, combo_upgrade_count, value_up
         get_combo(world, combo_upgrade_count),
         coin_values[value_upgrade_count],
         1 + fairness_level * 2,
-        10 ** fairness_level
+        10 ** (fairness_level + 1)
     )
     #print(f"Expected {money}  |   Item Cost: {item_cost}")
     return money > item_cost
