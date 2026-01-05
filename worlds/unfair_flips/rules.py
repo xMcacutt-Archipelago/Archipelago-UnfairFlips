@@ -3,6 +3,7 @@ from typing import Dict, Optional, TYPE_CHECKING
 if TYPE_CHECKING:
     from worlds.unfair_flips import *
 import math
+import random
 
 from worlds.unfair_flips import *
 
@@ -33,13 +34,14 @@ AVERAGE_NUM = 1000
 def simulate_money(
     world, heads_chance: float, combo: float, coin_value: float, max_combo_length: int, cap: int
 ) -> float:
+    rng = random.Random(8750)
     flip_difficulty = world.options.flip_difficulty.value
     total = 0.0
     for _ in range(AVERAGE_NUM):
         flip_len = 0
         money = 0.0
         for _ in range(flip_difficulty):
-            if world.random.random() < heads_chance and flip_len < max_combo_length:
+            if rng.random() < heads_chance and flip_len < max_combo_length:
                 money += combo**flip_len
                 flip_len += 1
             else:
