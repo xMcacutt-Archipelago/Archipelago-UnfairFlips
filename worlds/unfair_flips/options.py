@@ -33,6 +33,14 @@ class StartingHeadsChance(Range):
     range_end = 20
     default = 10
 
+class FlipDifficulty(Range):
+    """
+    How many flips logic expects you to do to buy an item in the shop
+    """
+    display_name = "Flip Difficulty"
+    range_start = 20
+    range_end = 200
+    default = 80
 
 class DeathLinkChance(Range):
     """
@@ -77,6 +85,7 @@ class UnfairFlipsOptions(PerGameCommonOptions):
     required_heads: RequiredHeads
     starting_heads_chance: StartingHeadsChance
     trap_fill_percentage: TrapFillPercentage
+    flip_difficulty: FlipDifficulty
     death_link: DeathLink
     death_link_min_streak: DeathLinkMinStreak
     death_link_chance: DeathLinkChance

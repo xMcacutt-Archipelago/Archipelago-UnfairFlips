@@ -30,13 +30,14 @@ def is_shop_accessible(world, heads_upgrade_count, combo_upgrade_count, value_up
 
 
 AVERAGE_NUM = 1000
-TARGET_FLIPS = 80
-def simulate_money(world, heads_chance: float, combo: float, coin_value: float, max_combo_length: int, cap: int) -> float:
+def simulate_money(
+    world, heads_chance: float, combo: float, coin_value: float, max_combo_length: int, cap: int
+) -> float:
     total = 0.0
     for _ in range(AVERAGE_NUM):
         flip_len = 0
         money = 0.0
-        for _ in range(TARGET_FLIPS):
+        for _ in range(world.options.flip_difficulty.value):
             if world.random.random() < heads_chance and flip_len < max_combo_length:
                 money += combo**flip_len
                 flip_len += 1
