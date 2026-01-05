@@ -38,8 +38,8 @@ class FlipDifficulty(Range):
     How many flips logic expects you to do to buy an item in the shop
     """
     display_name = "Flip Difficulty"
-    range_start = 20
-    range_end = 200
+    range_start = 45
+    range_end = 150
     default = 80
 
 class DeathLinkChance(Range):
