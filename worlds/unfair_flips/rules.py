@@ -18,15 +18,15 @@ def can_practically_get_heads_in_a_row(world, heads_upgrade_count, heads_count):
 
 def is_shop_accessible(world, heads_upgrade_count, combo_upgrade_count, value_upgrade_count, shop_level, fairness_level):
     item_cost = 10 ** shop_level * 0.9
+    capped_value_count = min(value_upgrade_count, len(coin_values) - 1)
     money = simulate_money(
         world,
         get_heads_chance(world, heads_upgrade_count),
         get_combo(world, combo_upgrade_count),
-        coin_values[value_upgrade_count],
+        coin_values[capped_value_count],
         1 + fairness_level * 2,
         10 ** (fairness_level + 1)
     )
-    #print(f"Expected {money}  |   Item Cost: {item_cost}")
     return money > item_cost
 
 
