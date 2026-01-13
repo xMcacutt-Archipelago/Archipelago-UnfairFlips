@@ -1,4 +1,4 @@
-MAX_HEADS = 50
+MAX_HEADS = 30
 JUNK_FACTOR = 0.3 # amount of items placements reserved for junk for shop upgrades
 MIN_COMBO = 1.2
 MAX_COMBO = 3.5

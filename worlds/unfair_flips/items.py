@@ -38,7 +38,8 @@ def create_items(world: UnfairFlipsWorld):
     create_multiple("Flip+", round(gate_count * (1 - JUNK_FACTOR)), world)
     create_multiple("Combo+", round(gate_count * (1 - JUNK_FACTOR)), world)
     create_multiple("Coin+", 4, world)
-    create_multiple("AutoFlip+", round(gate_count * (1 - JUNK_FACTOR)), world)
+    if world.options.auto_flip.value:
+        create_multiple("AutoFlip+", round(gate_count * (1 - JUNK_FACTOR)), world)
 
     # Junk
     remaining_locations: int = total_location_count - len(world.itempool)

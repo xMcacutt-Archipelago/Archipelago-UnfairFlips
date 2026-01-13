@@ -35,7 +35,7 @@ class UnfairFlipsWorld(World):
     game = "Unfair Flips"
     options_dataclass = UnfairFlipsOptions
     options: UnfairFlipsOptions
-    topology_present = True
+    topology_present = False
     item_name_to_id = {name: item.code for name, item in unfair_flips_item_table.items()}
     location_name_to_id = locations
     itempool = []
@@ -51,7 +51,7 @@ class UnfairFlipsWorld(World):
         gate_count = self.options.required_heads // 2
         upgrades_count = round(gate_count * (1 - JUNK_FACTOR))
         return {
-            "ModVersion": "1.0.3",
+            "ModVersion": "1.2.0",
             "EnergyLink": self.options.energy_link.value,
             "RequiredHeads": self.options.required_heads.value,
             "StartingHeadsChance": self.options.starting_heads_chance.value,
@@ -63,6 +63,10 @@ class UnfairFlipsWorld(World):
             "ComboUpgradeCount": upgrades_count,
             "AutoFlipUpgradeCount": upgrades_count,
         }
+
+
+    def get_filler_item_name(self) -> str:
+        return get_random_item_names(self.random, 1, junk_weights)[0]
 
 
     def create_regions(self):

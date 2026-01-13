@@ -30,26 +30,26 @@ def is_shop_accessible(world, heads_upgrade_count, combo_upgrade_count, value_up
     return money > item_cost
 
 
-AVERAGE_NUM = 1000
-def simulate_money(
-    world, heads_chance: float, combo: float, coin_value: float, max_combo_length: int, cap: int
-) -> float:
-    rng = random.Random(8750)
-    flip_difficulty = world.options.flip_difficulty.value
-    total = 0.0
-    for _ in range(AVERAGE_NUM):
-        flip_len = 0
-        money = 0.0
-        for _ in range(flip_difficulty):
-            if rng.random() < heads_chance and flip_len < max_combo_length:
-                money += combo**flip_len
-                flip_len += 1
-            else:
-                flip_len = 0
-        else:
-            flip_len = 0
-        total += money
-    return min(total/AVERAGE_NUM * coin_value, cap)
+# AVERAGE_NUM = 1000
+# def simulate_money(
+#     world, heads_chance: float, combo: float, coin_value: float, max_combo_length: int, cap: int
+# ) -> float:
+#     rng = random.Random(8750)
+#     flip_difficulty = world.options.flip_difficulty.value
+#     total = 0.0
+#     for _ in range(AVERAGE_NUM):
+#         flip_len = 0
+#         money = 0.0
+#         for _ in range(flip_difficulty):
+#             if rng.random() < heads_chance and flip_len < max_combo_length:
+#                 money += combo**flip_len
+#                 flip_len += 1
+#             else:
+#                 flip_len = 0
+#         else:
+#             flip_len = 0
+#         total += money
+#     return min(total/AVERAGE_NUM * coin_value, cap)
 
 
 def get_combo(world, combo_items):
@@ -63,8 +63,13 @@ def get_heads_chance(world: UnfairFlipsWorld, heads_items):
     return MIN_HEADS_CHANCE + (((MAX_HEADS_CHANCE - MIN_HEADS_CHANCE) / total_heads_items) * heads_items)
 
 
-def expected_money(heads_chance, combo, coin_value):
-    lc = math.log(combo)
-    lp = math.log(1.0 / (1.0 - heads_chance))
-    logE = (-61.260531823291899) + (-27.759028968182047)*lc + (12.063326381584254)*lp + (50.241718826972338)*lc*lp + (-3.0798487858260097)*(lp**2) + (4.3827917181432925)*(lc**2) + (101.59124820272879)*(1.0 - heads_chance) + (49.548495915644928)*(1.0 / combo) + (-87.432146739222489)*((1.0 - heads_chance) / combo)
-    return coin_value * (math.exp(logE) - (10e-13))
+def simulate_money(world, heads_chance: float, combo: float, coin_value: float, max_combo_length: int, cap: int) -> float:
+    flip_difficulty = world.options.flip_difficulty.value
+    if heads_chance <= 0 or max_combo_length <= 0:
+        return 0.0
+    money_per_flip = 0.0
+    for i in range(max_combo_length):
+        prob_of_streak = heads_chance ** (i + 1)
+        money_per_flip += prob_of_streak * (combo ** i)
+    total_money = flip_difficulty * money_per_flip * coin_value
+    return min(total_money, cap)

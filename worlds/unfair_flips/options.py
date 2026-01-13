@@ -13,6 +13,12 @@ class RequiredHeads(Range):
     range_end = MAX_HEADS
     default = 15
 
+class AutoFlip(Toggle):
+    """
+    Adds autoflip upgrades to the pool and enables the autoflip button in game
+    """
+    display_name = "AutoFlip"
+
 
 class TrapFillPercentage(Range):
     """
@@ -29,9 +35,9 @@ class StartingHeadsChance(Range):
     The initial chance for the coin to land on heads without any upgrades
     """
     display_name = "Starting Heads Chance"
-    range_start = 5
+    range_start = 10
     range_end = 20
-    default = 10
+    default = 15
 
 
 class FlipDifficulty(Range):
@@ -39,7 +45,7 @@ class FlipDifficulty(Range):
     How many flips logic expects you to do to buy an item in the shop
     """
     display_name = "Flip Difficulty"
-    range_start = 45
+    range_start = 50
     range_end = 150
     default = 80
 
@@ -77,6 +83,7 @@ unfair_flips_options = [
         StartingHeadsChance
     ]),
     OptionGroup("Logic Options", [
+        AutoFlip
     ]),
     OptionGroup("Traps", [
         TrapFillPercentage
@@ -96,6 +103,7 @@ unfair_flips_options = [
 class UnfairFlipsOptions(PerGameCommonOptions):
     required_heads: RequiredHeads
     starting_heads_chance: StartingHeadsChance
+    auto_flip: AutoFlip
     trap_fill_percentage: TrapFillPercentage
     flip_difficulty: FlipDifficulty
     energy_link: EnergyLink
