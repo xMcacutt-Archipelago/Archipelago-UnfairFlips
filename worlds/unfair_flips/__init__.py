@@ -42,27 +42,52 @@ class UnfairFlipsWorld(World):
 
     web = UnfairFlipsWeb()
 
+    ut_can_gen_without_yaml = True
+
     def __init__(self, multiworld: MultiWorld, player: int):
         super().__init__(multiworld, player)
         self.itempool = []
 
 
     def fill_slot_data(self):
+        # visualize_regions(self.multiworld.get_region("Menu", self.player), f"Player{self.player}.puml",
+        #                   show_entrance_names=True,
+        #                   regions_to_highlight=self.multiworld.get_all_state(self.player).reachable_regions[
+        #                       self.player])
         gate_count = self.options.required_heads // 2
         upgrades_count = round(gate_count * (1 - JUNK_FACTOR))
         return {
-            "ModVersion": "1.2.0",
-            "EnergyLink": self.options.energy_link.value,
+            "ModVersion": "1.3.0",
+            # "EnergyLink": self.options.energy_link.value,
             "RequiredHeads": self.options.required_heads.value,
             "StartingHeadsChance": self.options.starting_heads_chance.value,
             "DeathLink": self.options.death_link.value,
             "DeathLinkChance": self.options.death_link_chance.value,
             "DeathLinkMinStreak": self.options.death_link_min_streak.value,
+            "FlipDifficulty": self.options.flip_difficulty.value,
             "HeadsUpgradeCount": gate_count,
-            "FlipSpeedUpgradeCount": upgrades_count,
-            "ComboUpgradeCount": upgrades_count,
+            "FlipSpeedUpgradeCount": gate_count,
+            "ComboUpgradeCount": gate_count,
             "AutoFlipUpgradeCount": upgrades_count,
         }
+
+
+    def handle_ut_yamless(self, slot_data: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+        if not slot_data \
+                and hasattr(self.multiworld, "re_gen_passthrough") \
+                and isinstance(self.multiworld.re_gen_passthrough, dict) \
+                and self.game in self.multiworld.re_gen_passthrough:
+            slot_data = self.multiworld.re_gen_passthrough[self.game]
+        if not slot_data:
+            return None
+        self.options.required_heads.value = slot_data["RequiredHeads"]
+        self.options.flip_difficulty.value = slot_data["FlipDifficulty"]
+        self.options.starting_heads_chance.value = slot_data["StartingHeadsChance"]
+        return slot_data
+
+
+    def generate_early(self):
+        self.handle_ut_yamless(None)
 
 
     def get_filler_item_name(self) -> str:
@@ -89,8 +114,4 @@ class UnfairFlipsWorld(World):
         region.locations.append(loc)
 
     def generate_output(self, output_dir):
-        # visualize_regions(self.multiworld.get_region("Menu", self.player), f"Player{self.player}.puml",
-        #                   show_entrance_names=True,
-        #                   regions_to_highlight=self.multiworld.get_all_state(self.player).reachable_regions[
-        #                       self.player])
         return

@@ -33,11 +33,19 @@ def create_regions(world: UnfairFlipsWorld):
 
 
 def connect_all_regions(world: UnfairFlipsWorld):
-    for gate_index in range(math.ceil(world.options.required_heads / 2)):
+    coin_value_requirements = 0
+    num_gates = math.ceil(world.options.required_heads / 2)
+
+    value_upgrade_gates = {
+        round((i + 1) * (num_gates - 1) / 4)
+        for i in range(4)
+    }
+
+    for gate_index in range(num_gates):
         entrance: Entrance
         if gate_index == 0:
             fairness_entrance = connect_regions(world, "Menu", "Fairness Gate 1", "Menu -> Fairness Gate 1")
-            shop_entrance = connect_regions(world, "Menu", "Shop Gate 1", "Menu -> Shop Gate 1")
+            shop_entrance = connect_regions(world, "Fairness Gate 1", "Shop Gate 1", "Fairness Gate 1 -> Shop Gate 1")
         else:
             fairness_entrance = connect_regions(
                 world,
@@ -47,19 +55,16 @@ def connect_all_regions(world: UnfairFlipsWorld):
             )
             shop_entrance = connect_regions(
                 world,
-                f"Shop Gate {gate_index}",
+                f"Fairness Gate {gate_index + 1}",
                 f"Shop Gate {gate_index + 1}",
-                f"Shop Gate {gate_index} -> Shop Gate {gate_index + 1}",
+                f"Fairness Gate {gate_index + 1} -> Shop Gate {gate_index + 1}",
             )
-        fairness_entrance.access_rule = lambda state, gate=gate_index: state.has(
-            f"Progressive Fairness", world.player, gate
-        ) and state.has(f"Heads+", world.player, max(gate - 1, 0))
-        shop_entrance.access_rule = lambda state, gate=gate_index: is_shop_accessible(
-            world,
-            state.count("Heads+", world.player),
-            state.count("Combo+", world.player),
-            state.count("Coin+", world.player),
-            gate,
-            state.count("Progressive Fairness", world.player),
+        fairness_entrance.access_rule = lambda state, gate=gate_index, player=world.player: (
+            state.has(f"Progressive Fairness", player, gate) and state.has(f"Heads+", player, max(gate - 1, 0))
+        )
+        if gate_index in value_upgrade_gates:
+            coin_value_requirements += 1
+        shop_entrance.access_rule = lambda state, gate=gate_index, player=world.player, value=coin_value_requirements: (
+            state.has(f"Combo+", player, max(gate - 1, 0)) and state.has("Coin+", player, value) and state.has(f"Flip+", player, max(gate - 1, 0))
         )
 

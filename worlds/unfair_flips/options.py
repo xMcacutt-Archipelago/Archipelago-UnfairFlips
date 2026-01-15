@@ -45,9 +45,9 @@ class FlipDifficulty(Range):
     How many flips logic expects you to do to buy an item in the shop
     """
     display_name = "Flip Difficulty"
-    range_start = 50
-    range_end = 150
-    default = 80
+    range_start = 20
+    range_end = 50
+    default = 30
 
 
 class DeathLinkChance(Range):
@@ -70,11 +70,11 @@ class DeathLinkMinStreak(Range):
     default = 5
 
 
-class EnergyLink(Toggle):
-    """
-    Send excess money beyond the cap to the energy pool
-    """
-    display_name = "Energy Link"
+# class EnergyLink(Toggle):
+#     """
+#     Send excess money beyond the cap to the energy pool
+#     """
+#     display_name = "Energy Link"
 
 
 unfair_flips_options = [
@@ -88,9 +88,9 @@ unfair_flips_options = [
     OptionGroup("Traps", [
         TrapFillPercentage
     ]),
-    OptionGroup("Energy Link", [
-        EnergyLink
-    ]),
+    # OptionGroup("Energy Link", [
+    #     EnergyLink
+    # ]),
     OptionGroup("Death Link", [
         DeathLink,
         DeathLinkMinStreak,
@@ -106,7 +106,7 @@ class UnfairFlipsOptions(PerGameCommonOptions):
     auto_flip: AutoFlip
     trap_fill_percentage: TrapFillPercentage
     flip_difficulty: FlipDifficulty
-    energy_link: EnergyLink
+    # energy_link: EnergyLink
     death_link: DeathLink
     death_link_min_streak: DeathLinkMinStreak
     death_link_chance: DeathLinkChance

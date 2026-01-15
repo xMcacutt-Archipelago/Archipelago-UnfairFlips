@@ -35,8 +35,8 @@ def create_items(world: UnfairFlipsWorld):
     gate_count = world.options.required_heads // 2
     create_multiple("Progressive Fairness", gate_count, world)
     create_multiple("Heads+", gate_count, world)
-    create_multiple("Flip+", round(gate_count * (1 - JUNK_FACTOR)), world)
-    create_multiple("Combo+", round(gate_count * (1 - JUNK_FACTOR)), world)
+    create_multiple("Flip+", gate_count, world)
+    create_multiple("Combo+", gate_count, world)
     create_multiple("Coin+", 4, world)
     if world.options.auto_flip.value:
         create_multiple("AutoFlip+", round(gate_count * (1 - JUNK_FACTOR)), world)
@@ -63,7 +63,7 @@ class ItemData:
 unfair_flips_item_table: Dict[str, ItemData] = {
     "Progressive Fairness": ItemData(0x1, ItemClassification.progression),
     "Heads+": ItemData(0x2, ItemClassification.progression_skip_balancing),
-    "Flip+": ItemData(0x3, ItemClassification.useful),
+    "Flip+": ItemData(0x3, ItemClassification.progression),
     "Combo+": ItemData(0x4, ItemClassification.progression),
     "Coin+": ItemData(0x5, ItemClassification.progression),
     "AutoFlip+": ItemData(0x6, ItemClassification.useful),
