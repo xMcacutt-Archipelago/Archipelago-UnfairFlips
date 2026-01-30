@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import Dict, Optional, TYPE_CHECKING
 if TYPE_CHECKING:
     from worlds.unfair_flips import *
+import math
 from worlds.unfair_flips.data import *
 from BaseClasses import Item, ItemClassification, MultiWorld, Location
 
@@ -32,9 +33,9 @@ def create_items(world: UnfairFlipsWorld):
     total_location_count: int = len(world.multiworld.get_unfilled_locations(world.player))
 
     # Generic
-    gate_count = world.options.required_heads // 2
-    create_multiple("Progressive Fairness", gate_count, world)
-    create_multiple("Heads+", gate_count, world)
+    gate_count = math.ceil((world.options.required_heads + 1) / 2)
+    create_multiple("Progressive Fairness", gate_count - 1, world)
+    create_multiple("Heads+", gate_count - 1, world)
     create_multiple("Flip+", gate_count, world)
     create_multiple("Combo+", gate_count, world)
     create_multiple("Coin+", 4, world)

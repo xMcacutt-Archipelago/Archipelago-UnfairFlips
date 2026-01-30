@@ -68,13 +68,13 @@ def create_heads_count_locations(world: UnfairFlipsWorld, reg: Region, gate_inde
             heads_name = f"{head_1} Heads in a Row"
             heads_id = world.location_name_to_id[heads_name]
             location = create_location(world.player, reg, heads_name, heads_id)
-            location.access_rule = lambda state: can_practically_get_heads_in_a_row(
-                world, state.count("Heads+", world.player), head_1
+            location.access_rule = lambda state, h=head_1: can_practically_get_heads_in_a_row(
+                world, state.count("Heads+", world.player), h
             )
         elif head_1 == world.options.required_heads:
             world.create_event(reg.name, f"{head_1} Heads in a Row", f"{head_1} Heads in a Row")
-            world.multiworld.completion_condition[world.player] = lambda state: state.has(
-                f"{head_1} Heads in a Row", world.player
+            world.multiworld.completion_condition[world.player] = lambda state, h=head_1: state.has(
+                f"{h} Heads in a Row", world.player
             )
 
         head_2 = 1 + (gate_index - 1) * 2 + 2
@@ -82,11 +82,11 @@ def create_heads_count_locations(world: UnfairFlipsWorld, reg: Region, gate_inde
             heads_name = f"{head_2} Heads in a Row"
             heads_id = world.location_name_to_id[heads_name]
             location = create_location(world.player, reg, heads_name, heads_id)
-            location.access_rule = lambda state: can_practically_get_heads_in_a_row(
-                world, state.count("Heads+", world.player), head_2
+            location.access_rule = lambda state, h=head_2: can_practically_get_heads_in_a_row(
+                world, state.count("Heads+", world.player), h
             )
         elif head_2 == world.options.required_heads:
             world.create_event(reg.name, f"{head_2} Heads in a Row", f"{head_2} Heads in a Row")
-            world.multiworld.completion_condition[world.player] = lambda state: state.has(
-                f"{head_2} Heads in a Row", world.player
+            world.multiworld.completion_condition[world.player] = lambda state, h=head_2: state.has(
+                f"{h} Heads in a Row", world.player
             )

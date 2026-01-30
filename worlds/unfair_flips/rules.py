@@ -15,6 +15,7 @@ def can_practically_get_heads_in_a_row(world, heads_upgrade_count, heads_count):
     heads_chance = get_heads_chance(world, heads_upgrade_count)
     return heads_chance ** heads_count > PRACTICALITY_THRESHOLD
 
+
 def get_heads_chance(world: UnfairFlipsWorld, heads_items):
     total_heads_items = world.options.required_heads // 2
     MIN_HEADS_CHANCE = world.options.starting_heads_chance.value / 100
