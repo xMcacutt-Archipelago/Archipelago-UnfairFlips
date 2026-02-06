@@ -16,7 +16,7 @@ def generate_locations():
         generated_locations[f"{head + 1} Heads in a Row"] = 0x100 + head + 1
 
     # Shop locations
-    for head in range((MAX_HEADS // 2) * SHOP_LAYERS_PER_GATE_INDEX):
+    for head in range(math.ceil((MAX_HEADS + 1) / 2) * SHOP_LAYERS_PER_GATE_INDEX):
         generated_locations[f"Heads Chance Purchase {head + 1}"] = 0x200 + head * 4 + 0
         generated_locations[f"Flip Time Purchase {head + 1}"] = 0x200 + head * 4 + 1
         generated_locations[f"Combo Mult Purchase {head + 1}"] = 0x200 + head * 4 + 2
