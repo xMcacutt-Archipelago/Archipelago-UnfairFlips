@@ -57,7 +57,7 @@ class UnfairFlipsWorld(World):
         gate_count = self.options.required_heads // 2
         upgrades_count = round(gate_count * (1 - JUNK_FACTOR))
         return {
-            "ModVersion": "1.3.0",
+            "ModVersion": "1.4.0",
             # "EnergyLink": self.options.energy_link.value,
             "RequiredHeads": self.options.required_heads.value,
             "StartingHeadsChance": self.options.starting_heads_chance.value,
