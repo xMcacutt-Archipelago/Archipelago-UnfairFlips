@@ -50,10 +50,10 @@ class UnfairFlipsWorld(World):
 
 
     def fill_slot_data(self):
-        visualize_regions(self.multiworld.get_region("Menu", self.player), f"Player{self.player}.puml",
-                          show_entrance_names=True,
-                          regions_to_highlight=self.multiworld.get_all_state(self.player).reachable_regions[
-                              self.player])
+        # visualize_regions(self.multiworld.get_region("Menu", self.player), f"Player{self.player}.puml",
+        #                   show_entrance_names=True,
+        #                   regions_to_highlight=self.multiworld.get_all_state(self.player).reachable_regions[
+        #                       self.player])
         gate_count = self.options.required_heads // 2
         upgrades_count = round(gate_count * (1 - JUNK_FACTOR))
         return {
